@@ -1,7 +1,7 @@
 package model;
 
-//ŠÇ—ƒ†[ƒUŠÇ—ƒNƒ‰ƒX
+//ï¿½Ç—ï¿½ï¿½ï¿½ï¿½[ï¿½Uï¿½Ç—ï¿½ï¿½Nï¿½ï¿½ï¿½X
 public class ManagementAdomin {
-	private int adomin_id; // FK (user_id ‚ğ“ü‚ê‚é)
-	private int management_group_id;  // FK
+	private String adomin_id; // FK (user_id ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+	private String management_group_id;  // FK
 }

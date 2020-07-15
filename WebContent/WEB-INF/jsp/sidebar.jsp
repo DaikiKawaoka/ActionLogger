@@ -15,7 +15,7 @@
 		</a>
 	</h6>
 	<ul class="nav flex-column mb-2">
-		<li class="nav-item"><a class="nav-link" href="#"> <span
+		<li class="nav-item"><a class="nav-link" href="/ActionLogger/?view=action_form"> <span
 				data-feather="file-text"></span> 活動記録登録
 		</a></li>
 		<li class="nav-item"><a class="nav-link"

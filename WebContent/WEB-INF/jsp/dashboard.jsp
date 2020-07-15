@@ -1,5 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+	
+<!-- JSTL の　Core　を使うための宣言 -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="model.Action" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+
+<%
+	String user_name = (String) session.getAttribute("user_name");
+	String user_id = (String) session.getAttribute("user_id");
+	List<Action> actionList = (ArrayList<Action>)session.getAttribute("actionList");
+%>
 
 <div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -10,12 +22,12 @@
 	<table class="table table-borderless table-sm">
 		<tbody>
 			<tr class="d-flex">
-				<th scope="row" class="col-2 text-right">ユーザー名</tk>
-				<td>user001</td>
+				<th scope="row" class="col-2 text-right">ID</tk>
+				<td><c:out value="${userid}"/></td>
 			</tr>
 			<tr class="d-flex">
-				<th scope="row" class="col-2 text-right">氏名</th>
-				<td>河原電子</td>
+				<th scope="row" class="col-2 text-right">Name</th>
+				<td><c:out value="${user_name}"/></td>
 			</tr>
 			<tr class="d-flex">
 				<th scope="row" class="col-2 text-right">参加グループ</th>
@@ -49,41 +61,15 @@
 			</tr>
 		</thead>
 		<tbody>
+		<c:forEach var="action" items="actionList">
 			<tr>
-				<td>2020/06/16</td>
-				<td>9:00 - 13:00</td>
-				<td>KBC</td>
-				<td>授業</td>
-				<td></td>
+				<td><c:out value="${action.getStart_date}"/></td>
+				<td><c:out value="${action.getStart_time}"/>- <c:out value="${action.getFinish_time}"/></td>
+				<td><c:out value="${action.getAction_place}"/></td>
+				<td><c:out value="${action.getAction_reason}"/></td>
+				<td><c:out value="${action.getAction_remarks}"/></td>
 			</tr>
-			<tr>
-				<td>0000/00/00</td>
-				<td>00:00 - 00:00</td>
-				<td>□□□□□□□□□□□□□□□□□□□□</td>
-				<td>□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□</td>
-				<td>□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□</td>
-			</tr>
-			<tr>
-				<td>0000/00/00</td>
-				<td>00:00 - 00:00</td>
-				<td>□□□□□□□□□□□□□□□□□□□□</td>
-				<td>□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□</td>
-				<td>□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□</td>
-			</tr>
-			<tr>
-				<td>0000/00/00</td>
-				<td>00:00 - 00:00</td>
-				<td>□□□□□□□□□□□□□□□□□□□□</td>
-				<td>□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□</td>
-				<td>□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□</td>
-			</tr>
-			<tr>
-				<td>0000/00/00</td>
-				<td>00:00 - 00:00</td>
-				<td>□□□□□□□□□□□□□□□□□□□□</td>
-				<td>□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□</td>
-				<td>□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□□</td>
-			</tr>
+		</c:forEach>
 		</tbody>
 	</table>
 </div>

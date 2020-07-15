@@ -1,7 +1,7 @@
 package model;
 
-//Š‘®ƒNƒ‰ƒX
+//ï¿½ï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½X
 public class Belong {
-	private int management_group_id; //FK
-	private int user_id; //FK
+	private String management_group_id; //FK
+	private String user_id; //FK
 }

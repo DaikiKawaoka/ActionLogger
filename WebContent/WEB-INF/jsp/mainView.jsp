@@ -1,8 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+
+<!-- JSTL の　Core　を使うための宣言 -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%
 	String view = request.getParameter("view");
+	String user_name = (String) session.getAttribute("user_name");
 %>
 
 <!doctype html>
@@ -53,7 +57,7 @@
 		</button>
 		<ul class="navbar-nav px-3">
 			<li class="nav-item text-nowrap"></li>
-			<li class="nav-item text-nowrap"><a class="nav-link" href="/ActionLogger/logout">[ユーザー名]
+			<li class="nav-item text-nowrap"><a class="nav-link" href="/ActionLogger/logout"><c:out value="${user_name}"/>
 					- ログアウト</a></li>
 		</ul>
 	</nav>
@@ -72,12 +76,17 @@
 				%>
 				<jsp:include page="/WEB-INF/jsp/activities.jsp" />
 				<%
-					} else {
+					} else if(view != null && view.equals("action_form")) {
+				%>
+				<jsp:include page="/WEB-INF/jsp/addActionForm.jsp" />
+				<%
+					}else{
 				%>
 				<jsp:include page="/WEB-INF/jsp/dashboard.jsp" />
-				<%
+				<%	
 					}
 				%>
+				
 			</main>
 		</div>
 	</div>

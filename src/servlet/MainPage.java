@@ -10,6 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
+import dao.ActionDAO;
+import dao.UserDAO;
+import model.User;
+import model.Action;
+import java.util.*;
+
 /**
  * Servlet implementation class MainPage
  */
@@ -17,17 +24,12 @@ import javax.servlet.http.HttpSession;
 public class MainPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * Default constructor.
-	 */
+
 	public MainPage() {
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -41,6 +43,9 @@ public class MainPage extends HttpServlet {
 			response.sendRedirect("/ActionLogger/login");
 
 		} else {
+			// DBからユーザーのaction一覧を取得
+			ActionDAO actionDAO = new ActionDAO();
+			List<Action> actionList = actionDAO.get((String)session.getAttribute("userid"));
 			// MainViewを表示
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainView.jsp");
 			dispatcher.forward(request, response);

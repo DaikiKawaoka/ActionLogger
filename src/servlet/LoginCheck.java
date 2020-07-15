@@ -54,6 +54,7 @@ public class LoginCheck extends HttpServlet {
 		if (user != null && user.getPwdHash().equals(passwordHash)) {
 			HttpSession session = req.getSession();
 			session.setAttribute("userid", user.getUserId());
+			session.setAttribute("user_name",user.getName());
 			resp.sendRedirect("/ActionLogger/");
 
 		} else {

@@ -1,8 +1,8 @@
 package model;
 
-//ƒOƒ‹[ƒvŠÇ—ƒNƒ‰ƒX
+//ï¿½Oï¿½ï¿½ï¿½[ï¿½vï¿½Ç—ï¿½ï¿½Nï¿½ï¿½ï¿½X
 public class ManagementGroup {
-	private int management_group_id;
+	private String management_group_id;
 	private String group_name;
-	private int user_id;
+	private String user_id;
 }
