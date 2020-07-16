@@ -84,6 +84,10 @@
 				%>
 				<jsp:include page="/WEB-INF/jsp/createGroupForm.jsp" />
 				<%
+					} else if(view != null && view.equals("addBelongsForm")) {
+				%>
+				<jsp:include page="/WEB-INF/jsp/addBelongsForm.jsp" />
+				<%
 					}else{
 				%>
 				<jsp:include page="/WEB-INF/jsp/dashboard.jsp" />

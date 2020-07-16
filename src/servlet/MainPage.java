@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import dao.ActionDAO;
 import dao.AdominDAO;
+import dao.BelongsDAO;
 import dao.UserDAO;
 import model.User;
 import model.Action;
@@ -50,11 +51,17 @@ public class MainPage extends HttpServlet {
 			//actionListをセッションにセット
 			session.setAttribute("actionList",actionList);
 			
-			// DBから管理グループの一覧を取得
+			// DBから管理グループのListを取得
 			AdominDAO adominDAO = new AdominDAO();
 			List<ManagementGroup> adominGroupList = new ArrayList<ManagementGroup>();
 			adominGroupList = adominDAO.get((String)session.getAttribute("userid"));
 			session.setAttribute("adominGroupList",adominGroupList);
+			
+			//DBから所属グループのListをし取得
+			BelongsDAO belongsDAO = new BelongsDAO();
+			List<ManagementGroup> belongsList = new ArrayList<ManagementGroup>();
+			belongsList = belongsDAO.get((String)session.getAttribute("userid"));
+			session.setAttribute("belongsList",belongsList);
 			
 			// MainViewを表示
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainView.jsp");

@@ -44,7 +44,7 @@
 	</h6>
 	<ul class="nav flex-column mb-2">
 		<li class="nav-item"><a class="nav-link" href="/ActionLogger/?view=createGroup"> 新規グループ </a></li>
-		<li class="nav-item"><a class="nav-link" href="#"> グループに参加 </a></li>
+		<li class="nav-item"><a class="nav-link" href="/ActionLogger/?view=addBelongsForm"> グループに参加 </a></li>
 	</ul>
 
 	<h6
@@ -56,7 +56,7 @@
 	</h6>
 	<ul class="nav flex-column mb-2">	
 		<c:forEach var="group" items="${ adominGroupList }">
-			<li class="nav-item"><a class="nav-link" href="/ActionLogger/?<c:out value="${group.getManagement_group_id()}"/>"><c:out value="${group.getGroup_name()}"/></a></li>
+			<li class="nav-item"><a class="nav-link" href="/ActionLogger/groupshow/?id=<c:out value="${group.getManagement_group_id()}"/>"><c:out value="${group.getGroup_name()}"/></a></li>
 		</c:forEach>
 	</ul>
 

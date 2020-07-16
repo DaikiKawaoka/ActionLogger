@@ -1,7 +1,7 @@
 package model;
 
 //�����N���X
-public class Belong {
+public class Belongs {
 	private String management_group_id; //FK
 	private String user_id; //FK
 	
