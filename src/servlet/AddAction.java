@@ -70,10 +70,8 @@ public class AddAction extends HttpServlet {
 					action.setAction_id();
 					//作成時間セット
 					action.setCreate_time();
-
 					//セッションからユーザーID取得
 					action.setUser_id( (String) session.getAttribute("userid") );
-
 					action.setStart_date( req.getParameter("start_date") );
 					action.setFinish_date( req.getParameter("finish_date") );
 					action.setStart_time( req.getParameter("start_time") );

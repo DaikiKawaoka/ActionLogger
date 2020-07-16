@@ -17,9 +17,6 @@ import model.User;
 import model.Action;
 import java.util.*;
 
-/**
- * Servlet implementation class MainPage
- */
 @WebServlet("/")
 public class MainPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -45,7 +42,10 @@ public class MainPage extends HttpServlet {
 		} else {
 			// DBからユーザーのaction一覧を取得
 			ActionDAO actionDAO = new ActionDAO();
-			List<Action> actionList = actionDAO.get((String)session.getAttribute("userid"));
+			List<Action> actionList = new ArrayList<Action>();
+			actionList = actionDAO.get((String)session.getAttribute("userid"));
+			//actionListをセッションにセット
+			session.setAttribute("actionList",actionList);
 			// MainViewを表示
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainView.jsp");
 			dispatcher.forward(request, response);

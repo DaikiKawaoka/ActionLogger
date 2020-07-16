@@ -34,11 +34,11 @@ public class ActionDAO {
 			// SELECTを実行
 			ResultSet rs = pStmt.executeQuery();
 
-			// SELECT文の結果をuserに格納
+			// SELECT文の結果をactionに格納
 			while (rs.next()) {
 				action = new Action();
-				action.setAction_id();
-				action.setUser_id(rs.getString("user_id"));
+				action.setAction_id(rs.getString("action_id"));
+				action.setUser_id(rs.getString("userid"));
 				action.setStart_date(rs.getString("start_date"));
 				action.setStart_date(rs.getString("finish_date"));
 				action.setStart_time(rs.getString("start_time"));
@@ -55,7 +55,7 @@ public class ActionDAO {
 		}
 		return actionList;
 	}
-
+	
 	// actionを指定して、ユーザーaction情報を保存
 	// 戻り値:true 成功 , false 失敗
 	public boolean save(Action action) {

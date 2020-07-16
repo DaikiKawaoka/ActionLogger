@@ -10,7 +10,7 @@
 <%
 	String user_name = (String) session.getAttribute("user_name");
 	String user_id = (String) session.getAttribute("user_id");
-	List<Action> actionList = (ArrayList<Action>)session.getAttribute("actionList");
+	List<Action> actionList = (ArrayList<Action>) session.getAttribute("actionList");
 %>
 
 <div
@@ -61,13 +61,13 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach var="action" items="actionList">
+		<c:forEach var="action" items="${ actionList }">
 			<tr>
-				<td><c:out value="${action.getStart_date}"/></td>
-				<td><c:out value="${action.getStart_time}"/>- <c:out value="${action.getFinish_time}"/></td>
-				<td><c:out value="${action.getAction_place}"/></td>
-				<td><c:out value="${action.getAction_reason}"/></td>
-				<td><c:out value="${action.getAction_remarks}"/></td>
+				<td><c:out value="${action.getStart_date()}"/></td>
+				<td><c:out value="${action.getStart_time()}"/>- <c:out value="${action.getFinish_time()}"/></td>
+				<td><c:out value="${action.getAction_place()}"/></td>
+				<td><c:out value="${action.getAction_reason()}"/></td>
+				<td><c:out value="${action.getAction_remarks()}"/></td>
 			</tr>
 		</c:forEach>
 		</tbody>

@@ -53,6 +53,9 @@ public class Action {
 			this.action_id = saltStr;
 		}
 	}
+	public void setAction_id(String action_id) {
+		this.action_id = action_id;
+	}
 
 	public String getUser_id() {
 		return user_id;
