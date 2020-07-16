@@ -1,5 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+	
+<!-- JSTL の　Core　を使うための宣言 -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="model.ManagementGroup" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+
+<%
+	String user_name = (String) session.getAttribute("user_name");
+	String user_id = (String) session.getAttribute("user_id");
+	List<ManagementGroup> adominGroupList = (ArrayList<ManagementGroup>) session.getAttribute("adominGroupList");
+%>	
+	
 <div class="sidebar-sticky pt-3">
 
 	<ul class="nav flex-column">
@@ -30,7 +43,7 @@
 		</a>
 	</h6>
 	<ul class="nav flex-column mb-2">
-		<li class="nav-item"><a class="nav-link" href="#"> 新規グループ </a></li>
+		<li class="nav-item"><a class="nav-link" href="/ActionLogger/?view=createGroup"> 新規グループ </a></li>
 		<li class="nav-item"><a class="nav-link" href="#"> グループに参加 </a></li>
 	</ul>
 
@@ -41,10 +54,10 @@
 			aria-label="Add a new report"> <span data-feather="plus-circle"></span>
 		</a>
 	</h6>
-	<ul class="nav flex-column mb-2">
-		<li class="nav-item"><a class="nav-link" href="#"> KBC ITE19
-		</a></li>
-		<li class="nav-item"><a class="nav-link" href="#"> KBC 教職員 </a></li>
+	<ul class="nav flex-column mb-2">	
+		<c:forEach var="group" items="${ adominGroupList }">
+			<li class="nav-item"><a class="nav-link" href="/ActionLogger/?<c:out value="${group.getManagement_group_id()}"/>"><c:out value="${group.getGroup_name()}"/></a></li>
+		</c:forEach>
 	</ul>
 
 	<h6

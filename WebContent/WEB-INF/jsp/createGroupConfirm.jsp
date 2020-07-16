@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>ActionLogger Action登録確認</title>
+<title>ActionLogger グループ登録確認</title>
 
 <!-- Bootstrap core CSS -->
 <link
@@ -31,21 +31,15 @@
 		<div class="col"></div>
 		<div class="col-8">
 			<form class="form-adduser"
-				action="/ActionLogger/addactionconfirm" method="post">
+				action="/ActionLogger/creategroupconfirm" method="post">
+<br>
+				<h4 h3 mb-3 font-weight-normal>新規グループ確認</h4>
+<br>
+				<div class="mb-3">グループネーム　: <c:out value="${magagementGroupToAdd.group_name}"/></div>
+<br>
+				<div class="mb-3">グループ管理ユーザー　:　グループ作成者（あなた）</div>
+				<input type="submit" class="btn btn-secondary btn-block btn-lg" id="enterRoom" value="OK"></input>
 
-				<h4 h3 mb-3 font-weight-normal>新規行動記録</h4>
-				<div class="mb-3">外出日　: <c:out value="${actionToAdd.start_date}"/></div>
-				<div class="mb-3">外出時間　: <c:out value="${actionToAdd.start_time}"/></div>
-				<div class="mb-3">帰宅日　: <c:out value="${actionToAdd.finish_date}"/></div>
-				<div class="mb-3">帰宅時間　 : <c:out value="${actionToAdd.finish_time}"/></div>
-				<div class="mb-3">場所 : <c:out value="${actionToAdd.action_place}"/></div>
-				<div class="mb-3">理由 : <c:out value="${actionToAdd.action_reason}"/></div>
-				<div class="mb-3">備考 : <c:out value="${actionToAdd.action_remarks}"/></div>
-				<%-- フォームの正当性確認データ --%>
-				<input type="hidden" name="vKey" value="${validationKey.value}">
-				<input type="hidden" name="status" value="confirmed"></input> <input
-					type="submit" class="btn btn-secondary btn-block btn-lg"
-					id="enterRoom" value="OK"></input>
 			</form>
 		</div>
 		<div class="col"></div>

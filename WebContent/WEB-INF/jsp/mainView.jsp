@@ -80,6 +80,10 @@
 				%>
 				<jsp:include page="/WEB-INF/jsp/addActionForm.jsp" />
 				<%
+					} else if(view != null && view.equals("createGroup")) {
+				%>
+				<jsp:include page="/WEB-INF/jsp/createGroupForm.jsp" />
+				<%
 					}else{
 				%>
 				<jsp:include page="/WEB-INF/jsp/dashboard.jsp" />

@@ -4,6 +4,7 @@
 <!-- JSTL の　Core　を使うための宣言 -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page import="model.Action" %>
+<%@ page import="model.ManagementGroup" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 
@@ -11,6 +12,7 @@
 	String user_name = (String) session.getAttribute("user_name");
 	String user_id = (String) session.getAttribute("user_id");
 	List<Action> actionList = (ArrayList<Action>) session.getAttribute("actionList");
+	List<ManagementGroup> adominGroupList = (ArrayList<ManagementGroup>) session.getAttribute("adominGroupList");
 %>
 
 <div
@@ -31,19 +33,13 @@
 			</tr>
 			<tr class="d-flex">
 				<th scope="row" class="col-2 text-right">参加グループ</th>
-				<td>grp01</td>
-			</tr>
-			<tr class="d-flex">
-				<th scope="row" class="col-2 text-right"></th>
-				<td>grp02</td>
+				
 			</tr>
 			<tr class="d-flex">
 				<th scope="row" class="col-2 text-right">管理グループ</th>
-				<td>KBC ITE19</td>
-			</tr>
-			<tr class="d-flex">
-				<th scope="row" class="col-2 text-right"></th>
-				<td>KBC 教職員</td>
+				<c:forEach var="group" items="${ adominGroupList }">
+					<td><c:out value="${group.getGroup_name()}"/></td>
+				</c:forEach>
 			</tr>
 		</tbody>
 	</table>
