@@ -5,11 +5,13 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.util.List;
+import java.util.ArrayList;
 import model.User;
 import model.Action;
 import model.ManagementAdomin;
 import model.ManagementGroup;
+import model.GroupShowModel;
 
 //DB上のuserテーブルに対応するDAO
 public class GroupDAO {
@@ -48,16 +50,19 @@ public class GroupDAO {
 
 	// ユーザーIDを指定して、ユーザー情報を取得
 	// ユーザーIDが存在しない場合はnullを返す
-	public ManagementGroup getShowGroup(String groupId) {
-		ManagementGroup group = null;
+	public List<GroupShowModel> getGroupShow(String groupId) {
+		GroupShowModel groupShow = null;
+		List<GroupShowModel> groupShowList = new ArrayList<GroupShowModel>();
+		Action action = null;
+		User user = null;
 
 		// データベース接続
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 			// SELECT文の準備
-			String sql = "SELECT u.userid,u.name,a.START_TIME ,a.FINISH_TIME ,a.ACTION_PLACE ,a.ACTION_REASON ,a.ACTION_REMARKS ,a.START_DATE ,a.FINISH_DATE ,a.CREATE_TIME  "
+			String sql = "SELECT u.userid,u.name,a.action_id,a.START_TIME ,a.FINISH_TIME ,a.ACTION_PLACE ,a.ACTION_REASON ,a.ACTION_REMARKS ,a.START_DATE ,a.FINISH_DATE ,a.CREATE_TIME  "
 					+ "FROM  MANAGEMENTADOMIN  ma ,ACTION  a, BELONGS  b,USER  u ,MANAGEMENTGROUP mg "
-					+ "where a.userid=u.userid AND mg.MANAGEMENT_GROUP_ID =b.MANAGEMENT_GROUP_ID  AND ma.MANAGEMENT_GROUP_ID =mg.MANAGEMENT_GROUP_ID AND u.userid<>ma.adomin_id AND b.MANAGEMENT_GROUP_ID = '?'order by a.create_time desc;";
+					+ "where a.userid=u.userid AND mg.MANAGEMENT_GROUP_ID =b.MANAGEMENT_GROUP_ID  AND ma.MANAGEMENT_GROUP_ID =mg.MANAGEMENT_GROUP_ID AND u.userid<>ma.adomin_id AND b.MANAGEMENT_GROUP_ID =  ? order by a.create_time desc;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, groupId);
 
@@ -66,17 +71,34 @@ public class GroupDAO {
 
 			// SELECT文の結果をuserに格納
 			while (rs.next()) {
-				Action action = new Action();
-				User user = new User();
-				group.setManagement_group_id(rs.getString("management_group_id"));
-				group.setGroup_name(rs.getString("group_name"));
-				group.setCreate_time(rs.getString("create_time"));
+				//user情報格納
+				user = new User();
+				user.setName(rs.getString("name"));
+				user.setName(rs.getString("userid"));
+				//action情報格納
+				action = new Action();
+				action.setAction_id(rs.getString("action_id"));
+				action.setUser_id(rs.getString("userid"));
+				action.setStart_date(rs.getString("start_date"));
+				action.setStart_date(rs.getString("finish_date"));
+				action.setStart_time(rs.getString("start_time"));
+				action.setFinish_time(rs.getString("finish_time"));
+				action.setAction_place(rs.getString("action_place"));
+				action.setAction_reason(rs.getString("action_reason"));
+				action.setAction_remarks(rs.getString("action_remarks"));
+				action.setCreate_time(rs.getString("create_time"));
+				//GroupShowに情報格納
+				groupShow = new GroupShowModel();
+				groupShow.setAction(action);
+				groupShow.setUser(user);
+				//groupShowをリストに入れる
+				groupShowList.add(groupShow);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;
 		}
-		return group;
+		return groupShowList;
 	}
 
 	// ユーザーを指定して、ユーザー情報を保存

@@ -8,13 +8,13 @@
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 
+
 <%
 	String user_name = (String) session.getAttribute("user_name");
 	String user_id = (String) session.getAttribute("user_id");
 	List<Action> actionList = (ArrayList<Action>) session.getAttribute("actionList");
 	List<ManagementGroup> adominGroupList = (ArrayList<ManagementGroup>) session.getAttribute("adominGroupList");
 	List<ManagementGroup> belongsList = (ArrayList<ManagementGroup>) session.getAttribute("belongsList");
-
 %>
 
 <div
@@ -35,12 +35,17 @@
 			</tr>
 			<tr class="d-flex">
 				<th scope="row" class="col-2 text-right">参加グループ</th>
+				
+				<!-- 参加グループループ -->
 				<c:forEach var="group" items="${ belongsList }">
 					<td>name: <c:out value="${group.getGroup_name()} "/> <br> id: <c:out value="${group.getManagement_group_id()} "/></td>
 				</c:forEach>
+
 			</tr>
 			<tr class="d-flex">
 				<th scope="row" class="col-2 text-right">管理グループ</th>
+				
+				<!-- 管理グループループ -->
 				<c:forEach var="group" items="${ adominGroupList }">
 					<td>name: <c:out value="${group.getGroup_name()} "/> <br> id: <c:out value="${group.getManagement_group_id()} "/></td>
 				</c:forEach>

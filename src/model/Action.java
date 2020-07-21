@@ -1,10 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Random;
 import java.util.Date;
 
-public class Action {
+public class Action{
 	private String action_id; // ��L�[
 	private String user_id; // FK
 	private String start_date;

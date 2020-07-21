@@ -55,8 +55,9 @@
 		</a>
 	</h6>
 	<ul class="nav flex-column mb-2">	
+	<!-- 管理グループループ -->
 		<c:forEach var="group" items="${ adominGroupList }">
-			<li class="nav-item"><a class="nav-link" href="/ActionLogger/groupshow/?id=<c:out value="${group.getManagement_group_id()}"/>"><c:out value="${group.getGroup_name()}"/></a></li>
+			<li class="nav-item"><a class="nav-link" href="/ActionLogger/groupshow?id=<c:out value="${group.getManagement_group_id()}"/>"><c:out value="${group.getGroup_name()}"/></a></li>
 		</c:forEach>
 	</ul>
 

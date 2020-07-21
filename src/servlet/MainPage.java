@@ -27,12 +27,11 @@ public class MainPage extends HttpServlet {
 
 
 	public MainPage() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		// HttpSessionインタフェースのオブジェクトを取得
 		HttpSession session = request.getSession();
@@ -49,34 +48,36 @@ public class MainPage extends HttpServlet {
 			List<Action> actionList = new ArrayList<Action>();
 			actionList = actionDAO.get((String)session.getAttribute("userid"));
 			//actionListをセッションにセット
-			session.setAttribute("actionList",actionList);
+			if(!actionList.isEmpty()) {
+				session.setAttribute("actionList",actionList);
+			}
 			
 			// DBから管理グループのListを取得
 			AdominDAO adominDAO = new AdominDAO();
-			List<ManagementGroup> adominGroupList = new ArrayList<ManagementGroup>();
+			List<ManagementGroup> adominGroupList = new ArrayList<ManagementGroup>();;
 			adominGroupList = adominDAO.get((String)session.getAttribute("userid"));
-			session.setAttribute("adominGroupList",adominGroupList);
-			
+			if(!adominGroupList.isEmpty()) {
+				session.setAttribute("adominGroupList",adominGroupList);
+			}
 			//DBから所属グループのListをし取得
 			BelongsDAO belongsDAO = new BelongsDAO();
-			List<ManagementGroup> belongsList = new ArrayList<ManagementGroup>();
+			List<ManagementGroup> belongsList = new ArrayList<ManagementGroup>();;
 			belongsList = belongsDAO.get((String)session.getAttribute("userid"));
-			session.setAttribute("belongsList",belongsList);
-			
+			if(!belongsList.isEmpty()) {
+				session.setAttribute("belongsList",belongsList);
+			}
+
 			// MainViewを表示
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainView.jsp");
+			String url = "/WEB-INF/jsp/mainView.jsp";
+			RequestDispatcher dispatcher = request.getRequestDispatcher(url);
 			dispatcher.forward(request, response);
 		}
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+//	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//		// TODO Auto-generated method stub
+//		doGet(request, response);
+//	}
 
 }

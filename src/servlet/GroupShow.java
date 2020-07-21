@@ -15,7 +15,9 @@ import javax.servlet.http.HttpSession;
 import dao.ActionDAO;
 import dao.AdominDAO;
 import dao.BelongsDAO;
+import dao.GroupDAO;
 import model.Action;
+import model.GroupShowModel;
 import model.ManagementGroup;
 
 @WebServlet("/groupshow")
@@ -28,43 +30,36 @@ public class GroupShow extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// HttpSessionインタフェースのオブジェクトを取得
+		        request.setCharacterEncoding("UTF-8");
+				// HttpSessionインタフェースのオブジェクトを取得
 				HttpSession session = request.getSession();
-				// useridデータをsessionスコープで保存
-				String userid = (String) session.getAttribute("userid");
+				String userId = (String) session.getAttribute("userid");
+				String groupId = request.getParameter("id");
+				AdominDAO adominDAO = new AdominDAO();
+				boolean adominGroupBoolean = adominDAO.getAdominGroupBoolean(groupId, userId);
 
-				if (userid == null) {
+				if (userId == null) {
 					// MainViewを表示
 					response.sendRedirect("/ActionLogger/login");
 
-				} else {
-					// DBからユーザーのaction一覧を取得
-					ActionDAO actionDAO = new ActionDAO();
-					List<Action> actionList = new ArrayList<Action>();
-					actionList = actionDAO.get((String)session.getAttribute("userid"));
-					//actionListをセッションにセット
-					session.setAttribute("actionList",actionList);
+				}else if(userId != null && adominGroupBoolean ) {
+					//groupShowListをデータベースから取ってくる
+					List<GroupShowModel> groupShowList = null;
+					GroupDAO groupDAO = new GroupDAO();
+					groupShowList = (List<GroupShowModel>) groupDAO.getGroupShow(groupId);
 					
-					// DBから管理グループのListを取得
-					AdominDAO adominDAO = new AdominDAO();
-					List<ManagementGroup> adominGroupList = new ArrayList<ManagementGroup>();
-					adominGroupList = adominDAO.get((String)session.getAttribute("userid"));
-					session.setAttribute("adominGroupList",adominGroupList);
-					
-					//DBから所属グループのListをし取得
-					BelongsDAO belongsDAO = new BelongsDAO();
-					List<ManagementGroup> belongsList = new ArrayList<ManagementGroup>();
-					belongsList = belongsDAO.get((String)session.getAttribute("userid"));
-					session.setAttribute("belongsList",belongsList);
+					//リクエストスコープに保存
+//					session.setAttribute("groupShowList", groupShowList);
+					request.setAttribute("groupShowList", groupShowList);
 					
 					// MainViewを表示
-					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainView.jsp");
+       				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainView.jsp?view=groupshow");
 					dispatcher.forward(request, response);
-				}
-	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+				}else {
+					// MainViewを表示
+					response.sendRedirect("/ActionLogger");
+				}
 	}
 
 }

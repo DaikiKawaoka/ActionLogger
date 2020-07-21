@@ -12,7 +12,6 @@
 
 <%
 	String view = request.getParameter("view");
-
 	if(view == null) view = "dashboard";
 	String user_name = (String) session.getAttribute("user_name");
 %>

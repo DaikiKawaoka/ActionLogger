@@ -1,10 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-public class ManagementGroup {
+public class ManagementGroup{
 	private String management_group_id;
 	private String group_name;
 	private String create_time;
