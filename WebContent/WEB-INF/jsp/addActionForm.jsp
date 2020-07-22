@@ -4,7 +4,7 @@
 	
 	<div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-	<h1 class="h2">Submit</h1>
+	<h1 class="h2">活動記録登録</h1>
 </div>
 	<form action="/ActionLogger/addaction" method="post">
     <div class="form-group row">

@@ -83,6 +83,7 @@
 				</div>
 				<input type="submit" class="btn btn-secondary btn-block btn-lg"
 					id="enterRoom" value="登録"></input>
+			</form>
 		</div>
 		<div class="col"></div>
 

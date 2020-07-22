@@ -104,7 +104,22 @@
 				%>
 				<jsp:include page="/WEB-INF/jsp/dashboard.jsp" />
 				<%	
+					} else if(view != null && view.equals("profileEdit")) {
+				%>
+				<jsp:include page="/WEB-INF/jsp/profileEdit.jsp" />
+				<%	
+					} else if(view != null && view.equals("profileShow")) {
+				%>
+				<jsp:include page="/WEB-INF/jsp/profileShow.jsp" />
+				<%	
+					} else if(view != null && view.equals("passwordEdit")) {
+				%>
+				<jsp:include page="/WEB-INF/jsp/passwordEdit.jsp" />
+				<%
 					}else{
+				%>
+					<jsp:include page="/WEB-INF/jsp/dashboard.jsp" />
+				<%
 					}
 				%>
 				

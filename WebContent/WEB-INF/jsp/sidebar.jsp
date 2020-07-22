@@ -69,9 +69,11 @@
 		</a>
 	</h6>
 	<ul class="nav flex-column mb-2">
-		<li class="nav-item"><a class="nav-link" href="#"> プロフィール確認 </a>
+		<li class="nav-item"><a class="nav-link" href="/ActionLogger?view=profileShow"> プロフィール </a>
 		</li>
-		<li class="nav-item"><a class="nav-link" href="#"> プロフィール変更 </a>
+		<li class="nav-item"><a class="nav-link" href="/ActionLogger?view=profileEdit"> プロフィール変更 </a>
+		</li>
+		<li class="nav-item"><a class="nav-link" href="/ActionLogger?view=passwordEdit"> パスワード変更 </a>
 		</li>
 	</ul>
 
