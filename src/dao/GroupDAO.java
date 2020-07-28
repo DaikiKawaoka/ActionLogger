@@ -48,8 +48,7 @@ public class GroupDAO {
 		return group;
 	}
 
-	// ユーザーIDを指定して、ユーザー情報を取得
-	// ユーザーIDが存在しない場合はnullを返す
+
 	public List<GroupShowModel> getGroupShow(String groupId) {
 		GroupShowModel groupShow = null;
 		List<GroupShowModel> groupShowList = new ArrayList<GroupShowModel>();
@@ -61,8 +60,8 @@ public class GroupDAO {
 
 			// SELECT文の準備
 			String sql = "SELECT u.userid,u.name,a.action_id,a.START_TIME ,a.FINISH_TIME ,a.ACTION_PLACE ,a.ACTION_REASON ,a.ACTION_REMARKS ,a.START_DATE ,a.FINISH_DATE ,a.CREATE_TIME  "
-					+ "FROM  MANAGEMENTADOMIN  ma ,ACTION  a, BELONGS  b,USER  u ,MANAGEMENTGROUP mg "
-					+ "where a.userid=u.userid AND mg.MANAGEMENT_GROUP_ID =b.MANAGEMENT_GROUP_ID  AND ma.MANAGEMENT_GROUP_ID =mg.MANAGEMENT_GROUP_ID AND u.userid<>ma.adomin_id AND b.MANAGEMENT_GROUP_ID =  ? order by a.create_time desc;";
+					+ "FROM ACTION  a, BELONGS  b,USER  u "
+					+ "where a.userid=u.userid AND b.MANAGEMENT_GROUP_ID = ? AND b.userid = u.userid order by a.create_time desc;";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			pStmt.setString(1, groupId);
 

@@ -36,7 +36,7 @@ input[type=text]{
 	<form action="/ActionLogger/searchaction" method="get">
 		<div class="form-group">
 			<input type="text" class="form-control col-7" name="search"
-				placeholder="検索 ( 場所名 ) ">
+				placeholder="日付や場所名で検索できます。 例）2020-07-01 , 学校 ">
 		</div>
 	</form>
 </div>

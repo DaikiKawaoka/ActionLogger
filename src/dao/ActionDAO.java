@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import model.Action;
+import model.GroupShowModel;
+import model.User;
 
 //DB上のactionテーブルに対応するDAO
 public class ActionDAO {
@@ -99,11 +101,12 @@ public class ActionDAO {
 		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
 
 			// SELECT文の準備
-			String sql = "SELECT * FROM action WHERE userid = ? AND (action_place LIKE ? )  order by create_time desc";
+			String sql = "SELECT * FROM action WHERE userid = ? AND (action_place LIKE ? OR START_DATE LIKE ?)  order by create_time desc";
 			PreparedStatement pStmt = conn.prepareStatement(sql);
 			String like = "%";
 			pStmt.setString(1, userId);
 			pStmt.setString(2, like+search+like);
+			pStmt.setString(3, like+search+like);
 
 			// SELECTを実行
 			ResultSet rs = pStmt.executeQuery();
@@ -128,5 +131,60 @@ public class ActionDAO {
 			return null;
 		}
 		return actionList;
+	}
+	
+	public List<GroupShowModel> searchGroupShowAction(String groupId,String search) {
+		GroupShowModel groupShow = null;
+		List<GroupShowModel> groupShowList = new ArrayList<GroupShowModel>();
+		Action action = null;
+		User user = null;
+
+		// データベース接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			// SELECT文の準備
+			String sql = "SELECT u.userid,u.name,a.action_id,a.START_TIME ,a.FINISH_TIME ,a.ACTION_PLACE ,a.ACTION_REASON ,a.ACTION_REMARKS ,a.START_DATE ,a.FINISH_DATE ,a.CREATE_TIME  "
+					+ "FROM ACTION  a, BELONGS  b,USER  u "
+					+ "where a.userid=u.userid AND b.MANAGEMENT_GROUP_ID = ? AND b.userid = u.userid AND (a.action_place LIKE ? OR a.START_DATE LIKE ?)   order by a.create_time desc;";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			String like = "%";
+			pStmt.setString(1, groupId);
+			pStmt.setString(2, like+search+like);
+			pStmt.setString(3, like+search+like);
+			
+
+			// SELECTを実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// SELECT文の結果をuserに格納
+			while (rs.next()) {
+				//user情報格納
+				user = new User();
+				user.setName(rs.getString("name"));
+				user.setName(rs.getString("userid"));
+				//action情報格納
+				action = new Action();
+				action.setAction_id(rs.getString("action_id"));
+				action.setUser_id(rs.getString("userid"));
+				action.setStart_date(rs.getString("start_date"));
+				action.setStart_date(rs.getString("finish_date"));
+				action.setStart_time(rs.getString("start_time"));
+				action.setFinish_time(rs.getString("finish_time"));
+				action.setAction_place(rs.getString("action_place"));
+				action.setAction_reason(rs.getString("action_reason"));
+				action.setAction_remarks(rs.getString("action_remarks"));
+				action.setCreate_time(rs.getString("create_time"));
+				//GroupShowに情報格納
+				groupShow = new GroupShowModel();
+				groupShow.setAction(action);
+				groupShow.setUser(user);
+				//groupShowをリストに入れる
+				groupShowList.add(groupShow);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return groupShowList;
 	}
 }

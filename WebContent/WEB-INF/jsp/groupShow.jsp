@@ -12,9 +12,15 @@
 
 <%
 	List<GroupShowModel> groupShowList = null;
-groupShowList = (ArrayList<GroupShowModel>) request.getAttribute("groupShowList");
-List<User> groupShowUserList = null;
-groupShowUserList = (ArrayList<User>) request.getAttribute("groupShowUserList");
+	groupShowList = (ArrayList<GroupShowModel>) request.getAttribute("groupShowList");
+
+	List<User> groupShowUserList = null;
+	groupShowUserList = (ArrayList<User>) request.getAttribute("groupShowUserList");
+
+	List<GroupShowModel> searchGroupShowAction = null;
+	searchGroupShowAction= (ArrayList<GroupShowModel>) request.getAttribute("searchGroupShowAction");
+
+ 	String groupId = (String) request.getAttribute("groupId");
 %>
 <style>
 .no-action-td {
@@ -23,6 +29,12 @@ groupShowUserList = (ArrayList<User>) request.getAttribute("groupShowUserList");
 	line-height: 300px;
 	text-align: center;
 	color: #888;
+}
+form{
+  width:800px;
+}
+input[type=text]{
+  width:800px;
 }
 </style>
 
@@ -55,15 +67,21 @@ groupShowUserList = (ArrayList<User>) request.getAttribute("groupShowUserList");
 <div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 	<h1 class="h2">行動記録</h1>
+	<form action="/ActionLogger/searchaction" method="get">
+		<div class="form-group">
+			<input type="text" class="form-control col-7" name="search"
+				placeholder="日付や場所名で検索できます。 例）2020-07-01 , 学校 ">
+			<input type="hidden" name="groupId" value="<c:out value="${groupId}"/>">
+		</div>
+	</form>
 </div>
 
 <div class="table-responsive">
-						<table class="table table-striped table-sm">
-							<thead>
-								<tr>
-									<th>ユーザーネーム
-									<th><th>日付
-									</th>
+	<table class="table table-striped table-sm">
+		<thead>
+			<tr>
+				<th>ユーザーネーム</th>
+				<th>日付</th>
 				<th>時刻</th>
 				<th>場所</th>
 				<th>理由</th>
@@ -72,18 +90,35 @@ groupShowUserList = (ArrayList<User>) request.getAttribute("groupShowUserList");
 		</thead>
 		<tbody>
 			<c:choose>
-				<c:when test="${groupShowList != null}">
-					<c:forEach var="action" items="${ groupShowList }">
-						<tr>
-							<td><c:out value="${action.getUser().getName()}" /></td>
-							<td><c:out value="${action.getAction().getStart_date()}" /></td>
-							<td><c:out value="${action.getAction().getStart_time()}" />
-								~ <c:out value="${action.getAction().getFinish_time()}" /></td>
-							<td><c:out value="${action.getAction().getAction_place()}" /></td>
-							<td><c:out value="${action.getAction().getAction_reason()}" /></td>
-							<td><c:out value="${action.getAction().getAction_remarks()}" /></td>
-						</tr>
-					</c:forEach>
+				<c:when test="${groupShowList != null or searchGroupShowAction!= null}">
+				<c:choose>
+					<c:when test="${searchGroupShowAction != null}">
+						<c:forEach var="action" items="${ searchGroupShowAction }">
+							<tr>
+								<td><c:out value="${action.getUser().getName()}" /></td>
+								<td><c:out value="${action.getAction().getStart_date()}" /></td>
+								<td><c:out value="${action.getAction().getStart_time()}" />
+									~ <c:out value="${action.getAction().getFinish_time()}" /></td>
+								<td><c:out value="${action.getAction().getAction_place()}" /></td>
+								<td><c:out value="${action.getAction().getAction_reason()}" /></td>
+								<td><c:out value="${action.getAction().getAction_remarks()}" /></td>
+							</tr>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						<c:forEach var="action" items="${ groupShowList }">
+							<tr>
+								<td><c:out value="${action.getUser().getName()}" /></td>
+								<td><c:out value="${action.getAction().getStart_date()}" /></td>
+								<td><c:out value="${action.getAction().getStart_time()}" />
+									~ <c:out value="${action.getAction().getFinish_time()}" /></td>
+								<td><c:out value="${action.getAction().getAction_place()}" /></td>
+								<td><c:out value="${action.getAction().getAction_reason()}" /></td>
+								<td><c:out value="${action.getAction().getAction_remarks()}" /></td>
+							</tr>
+						</c:forEach>
+					</c:otherwise>
+				</c:choose>	
 				</c:when>
 				<c:otherwise>
 					<tr>

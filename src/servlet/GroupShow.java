@@ -58,7 +58,7 @@ public class GroupShow extends HttpServlet {
 //					session.setAttribute("groupShowList", groupShowList);
 					request.setAttribute("groupShowList", groupShowList);
 					request.setAttribute("groupShowUserList", groupShowUserList);
-					
+					request.setAttribute("groupId", groupId);
 					// MainViewを表示
        				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainView.jsp?view=groupshow");
 					dispatcher.forward(request, response);
