@@ -90,4 +90,43 @@ public class ActionDAO {
 		}
 		return true;
 	}
+	
+	public List<Action> searchAction(String userId,String search) {
+		Action action = null;
+		List<Action> actionList = new ArrayList<Action>();
+
+		// データベース接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			// SELECT文の準備
+			String sql = "SELECT * FROM action WHERE userid = ? AND (action_place LIKE ? )  order by create_time desc";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			String like = "%";
+			pStmt.setString(1, userId);
+			pStmt.setString(2, like+search+like);
+
+			// SELECTを実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// SELECT文の結果をactionに格納
+			while (rs.next()) {
+				action = new Action();
+				action.setAction_id(rs.getString("action_id"));
+				action.setUser_id(rs.getString("userid"));
+				action.setStart_date(rs.getString("start_date"));
+				action.setStart_date(rs.getString("finish_date"));
+				action.setStart_time(rs.getString("start_time"));
+				action.setFinish_time(rs.getString("finish_time"));
+				action.setAction_place(rs.getString("action_place"));
+				action.setAction_reason(rs.getString("action_reason"));
+				action.setAction_remarks(rs.getString("action_remarks"));
+				action.setCreate_time(rs.getString("create_time"));
+				actionList.add(action);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return actionList;
+	}
 }

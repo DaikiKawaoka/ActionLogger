@@ -1,12 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 	
+<style>
+h4{
+	padding-bottom:40px;
+	color:red;
+}
+</style>		
 	
-	<div
+<div
 	class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 	<h1 class="h2">活動記録登録</h1>
 </div>
 	<form action="/ActionLogger/addaction" method="post">
+	<h4>登録すると自分が参加しているグループのすべての管理者に見られます</h4>
     <div class="form-group row">
       <label>外出日時</label>
       <div class="col-md-3">

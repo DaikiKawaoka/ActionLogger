@@ -5,7 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.ManagementGroup;
 import model.User;
 
 //DB上のuserテーブルに対応するDAO
@@ -46,6 +49,39 @@ public class UserDAO {
 			return null;
 		}
 		return user;
+	}
+	
+	
+	public List<User> getGroupShowUserList(String groupId) {
+		User user = null;
+		List<User> userList = new ArrayList<User>(); 
+
+		// データベース接続
+		try (Connection conn = DriverManager.getConnection(JDBC_URL, DB_USER, DB_PASS)) {
+
+			// SELECT文の準備
+			String sql = "SELECT DISTINCT u.userid, u.name, u.address, u.tel, u.email FROM user u, belongs b WHERE b.management_group_id= ? AND u.userid = b.userid";
+			PreparedStatement pStmt = conn.prepareStatement(sql);
+			pStmt.setString(1, groupId);
+
+			// SELECTを実行
+			ResultSet rs = pStmt.executeQuery();
+
+			// SELECT文の結果をuserに格納
+			while (rs.next()) {
+				user = new User();
+				user.setUserId(rs.getString("userid"));
+				user.setName(rs.getString("name"));
+				user.setAddress(rs.getString("address"));
+				user.setTel(rs.getString("tel"));
+				user.setEmail(rs.getString("email"));
+				userList.add(user);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return userList;
 	}
 
 	// ユーザーを指定して、ユーザー情報を保存

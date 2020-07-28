@@ -16,9 +16,11 @@ import dao.ActionDAO;
 import dao.AdominDAO;
 import dao.BelongsDAO;
 import dao.GroupDAO;
+import dao.UserDAO;
 import model.Action;
 import model.GroupShowModel;
 import model.ManagementGroup;
+import model.User;
 
 @WebServlet("/groupshow")
 public class GroupShow extends HttpServlet {
@@ -48,9 +50,14 @@ public class GroupShow extends HttpServlet {
 					GroupDAO groupDAO = new GroupDAO();
 					groupShowList = (List<GroupShowModel>) groupDAO.getGroupShow(groupId);
 					
+					List<User> groupShowUserList = null;
+					UserDAO userDAO = new UserDAO();
+					groupShowUserList = (List<User>) userDAO.getGroupShowUserList(groupId);
+					
 					//リクエストスコープに保存
 //					session.setAttribute("groupShowList", groupShowList);
 					request.setAttribute("groupShowList", groupShowList);
+					request.setAttribute("groupShowUserList", groupShowUserList);
 					
 					// MainViewを表示
        				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/mainView.jsp?view=groupshow");
