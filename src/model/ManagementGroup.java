@@ -5,7 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
 
-public class ManagementGroup{
+public class ManagementGroup implements Serializable{
 	private String management_group_id;
 	private String group_name;
 	private String create_time;

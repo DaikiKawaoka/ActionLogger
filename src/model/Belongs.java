@@ -1,7 +1,8 @@
 package model;
 
-//�����N���X
-public class Belongs {
+import java.io.Serializable;
+
+public class Belongs implements Serializable{
 	private String management_group_id; //FK
 	private String user_id; //FK
 	
